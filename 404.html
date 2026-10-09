@@ -2,98 +2,377 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>404 - Not Found</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#020713">
+  <meta name="robots" content="noindex">
+  <title>Page Not Found | BoostingServer</title>
+
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: 'Roboto', sans-serif;
-      overflow: hidden;
+    html {
+      min-height: 100%;
+      background: #020713;
     }
 
     body {
-      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-      background-size: 600% 600%;
-      animation: gradientBG 15s ease infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 28px 16px;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      color: #f4faff;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 50% 20%, #071c3d, transparent 60%),
+        #020713;
     }
 
-    .container {
-      text-align: center;
-      animation: fadeIn 1.2s ease-out both;
+    .background {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid {
+      position: absolute;
+      inset: -60px;
+      background-image:
+        linear-gradient(rgba(0, 153, 255, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 153, 255, .06) 1px, transparent 1px);
+      background-size: 52px 52px;
+      animation: gridMove 14s linear infinite;
     }
 
     .glow {
-      font-size: 120px;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(90deg, #00ffe0, #ff6ec4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(0, 255, 224, 0.7), 0 0 30px rgba(255, 110, 196, 0.5);
-      animation: pulse 2s infinite alternate;
+      position: absolute;
+      width: min(70vw, 500px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #007dff;
+      filter: blur(100px);
+      opacity: .16;
+      animation: glowMove 8s ease-in-out infinite alternate;
     }
 
-    p {
-      font-size: 22px;
-      color: #cccccc;
-      margin-top: 10px;
+    .glow-one {
+      top: -20%;
+      right: -15%;
     }
 
-    a {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 12px 30px;
-      border-radius: 30px;
-      background: #00ffe0;
-      color: #111;
-      font-weight: bold;
+    .glow-two {
+      bottom: -25%;
+      left: -15%;
+      background: #00c8ff;
+      animation-delay: -4s;
+    }
+
+    .card {
+      position: relative;
+      width: min(100%, 640px);
+      padding: clamp(28px, 6vw, 60px);
+      text-align: center;
+      border: 1px solid #16476b;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(7, 24, 43, .94),
+        rgba(2, 8, 17, .97)
+      );
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, .4),
+        0 0 60px rgba(0, 119, 255, .1);
+      animation: appear .8s ease-out both;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #f4faff;
       text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+      font-size: clamp(12px, 3.5vw, 17px);
+      font-weight: 900;
+      letter-spacing: 1px;
     }
 
-    a:hover {
-      background: #ff6ec4;
-      color: #fff;
-      box-shadow: 0 0 15px #ff6ec4, 0 0 30px #ff6ec4;
+    .brand-icon {
+      width: 36px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, #20d8ff, #075cff);
+      clip-path: polygon(
+        50% 0, 92% 22%, 92% 72%,
+        50% 100%, 8% 72%, 8% 22%
+      );
     }
 
-    @keyframes pulse {
-      0% {
-        text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+    .brand-name span {
+      color: #25cfff;
+    }
+
+    .visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: clamp(180px, 42vw, 260px);
+      margin: 22px 0;
+      isolation: isolate;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(75%, 250px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(57, 207, 255, .25);
+      border-radius: 50%;
+      z-index: -1;
+      animation: spin 18s linear infinite;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -4px;
+      width: 8px;
+      height: 8px;
+      background: #39cfff;
+      border-radius: 50%;
+      box-shadow: 0 0 18px #00bfff;
+    }
+
+    .orbit-two {
+      width: min(58%, 195px);
+      border-style: dashed;
+      animation-direction: reverse;
+      animation-duration: 24s;
+    }
+
+    .error-number {
+      margin: 0;
+      font-size: clamp(88px, 23vw, 150px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -6px;
+      color: #53dfff;
+      text-shadow:
+        0 0 24px rgba(0, 190, 255, .5),
+        0 0 70px rgba(0, 110, 255, .35);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      color: #39cfff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #39cfff;
+      box-shadow: 0 0 12px #39cfff;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(25px, 5vw, 36px);
+      line-height: 1.2;
+    }
+
+    .description {
+      max-width: 400px;
+      margin: 0 auto;
+      color: #a3b7ca;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 14px 22px;
+      border: 1px solid #2cbfff;
+      border-radius: 10px;
+      color: white;
+      background: linear-gradient(135deg, #078fff, #0542ca);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 0 24px rgba(0, 144, 255, .18);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      border-color: #7ceaff;
+      box-shadow: 0 10px 30px rgba(0, 166, 255, .3);
+    }
+
+    .button-secondary {
+      border-color: #245579;
+      background: #061a2c;
+      color: #c7e8f8;
+      box-shadow: none;
+    }
+
+    .button svg {
+      width: 19px;
+      height: 19px;
+      flex-shrink: 0;
+    }
+
+    a:focus-visible {
+      outline: 2px solid #69e4ff;
+      outline-offset: 6px;
+    }
+
+    .footer {
+      margin: 30px 0 0;
+      padding-top: 22px;
+      border-top: 1px solid #102e48;
+      color: #8096ab;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes blink {
+      50% { opacity: .35; }
+    }
+
+    @keyframes gridMove {
+      to { transform: translateY(52px); }
+    }
+
+    @keyframes glowMove {
+      to { transform: translate(30px, 35px) scale(1.1); }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
-      100% {
-        text-shadow: 0 0 30px #ff6ec4, 0 0 60px #ff6ec4;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 420px) {
+      .card {
+        border-radius: 18px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .description {
+        font-size: 14px;
+      }
     }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="glow">404</div>
-    <p>Oops! The page you're looking for doesn't exist.</p>
-    <a href="/">Go Back Home</a>
+  <div class="background" aria-hidden="true">
+    <div class="grid"></div>
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
   </div>
+
+  <main class="card">
+    <a href="/" class="brand" aria-label="BoostingServer home">
+      <span class="brand-icon" aria-hidden="true">B</span>
+      <span class="brand-name">BOOSTING<span>SERVER</span></span>
+    </a>
+
+    <div class="visual" aria-hidden="true">
+      <div class="orbit"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="error-number">404</div>
+    </div>
+
+    <p class="status">ERROR 404</p>
+    <h1>Page not found</h1>
+
+    <p class="description">
+      This page may have moved, or the link may be wrong.
+      Go back to the home page or message us for help.
+    </p>
+
+    <div class="actions">
+      <a href="/" class="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+          <path d="m3 10 9-7 9 7"/>
+          <path d="M5 9v12h14V9M9 21v-8h6v8"/>
+        </svg>
+        Back to Home
+      </a>
+
+      <a href="https://m.me/boostingserver"
+         class="button button-secondary"
+         target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.5 2 2 6.1 2 11.2c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.3S17.5 2 12 2zm1 12-3-3-5 3 5.5-6L14 11l5-3z"/>
+        </svg>
+        Message Us
+      </a>
+    </div>
+
+    <p class="footer">BoostingServer</p>
+  </main>
 </body>
 </html>
