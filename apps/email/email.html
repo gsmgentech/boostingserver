@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Update</title>
+<style>
+*{box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#182d49 0,#0d1117 42%,#080b10 100%);color:#f0f6fc;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:440px;background:rgba(22,27,34,.96);border:1px solid #30363d;border-radius:28px;padding:42px 32px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.icon{width:84px;height:84px;margin:0 auto 22px;border-radius:25px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:grid;place-items:center;box-shadow:0 12px 35px rgba(37,99,235,.3)}
+.icon svg{width:42px;height:42px;fill:none;stroke:white;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+h1{font-size:29px;margin:0 0 10px;letter-spacing:-.5px}
+#versionText{margin:0;color:#8b949e;font-size:15px}
+.download-box{margin:30px 0 16px;padding:18px;border:1px solid #30363d;border-radius:20px;background:#0d1117;text-align:left}
+.file-label{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+#fileName{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{width:100%;min-height:58px;border-radius:15px;border:0;display:flex;align-items:center;justify-content:center;gap:11px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .15s ease,filter .15s ease}
+.btn:active{transform:scale(.98)}
+.download{color:#fff;background:linear-gradient(135deg,#238636,#2ea043);box-shadow:0 10px 25px rgba(35,134,54,.18)}
+.download:hover{filter:brightness(1.1)}
+.copy{margin-top:12px;color:#c9d1d9;background:#21262d;border:1px solid #30363d}
+.copy:hover{background:#292f38}
+.btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#status{min-height:22px;margin:17px 0 0;color:#58a6ff;font-size:14px}
+.footer{margin-top:28px;padding-top:20px;border-top:1px solid #21262d;color:#6e7681;font-size:12px;letter-spacing:.5px}
+.loading{opacity:.55;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="icon">
+<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg>
+</div>
+<h1 id="appName">Inventory</h1>
+<p id="versionText">Checking latest version...</p>
+<div class="download-box">
+<div class="file-label">Latest Update</div>
+<div id="fileName">Loading APK...</div>
+</div>
+<a class="btn download loading" id="downloadBtn" href="#">
+<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+<span>Download Latest APK</span>
+</a>
+<button class="btn copy loading" id="copyBtn" type="button">
+<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/></svg>
+<span>Copy Direct Download Link</span>
+</button>
+<div id="status"></div>
+<div class="footer">SECURE DIRECT DOWNLOAD</div>
+</div>
+<script>
+let downloadLink="";
+const appName=document.getElementById("appName");
+const versionText=document.getElementById("versionText");
+const fileName=document.getElementById("fileName");
+const downloadBtn=document.getElementById("downloadBtn");
+const copyBtn=document.getElementById("copyBtn");
+const status=document.getElementById("status");
+
+async function loadUpdate(){
+try{
+const response=await fetch("latest.json?"+Date.now(),{cache:"no-store"});
+if(!response.ok)throw new Error("Unable to load latest.json");
+const data=await response.json();
+if(!data.version||!data.file)throw new Error("Invalid latest.json");
+downloadLink=data.file;
+appName.textContent="Inventory "+data.version;
+versionText.textContent="Latest Android Build";
+fileName.textContent=data.file;
+downloadBtn.href=downloadLink;
+downloadBtn.classList.remove("loading");
+copyBtn.classList.remove("loading");
+}catch(error){
+versionText.textContent="Unable to load update";
+fileName.textContent="No APK available";
+status.textContent=error.message;
+}
+}
+
+copyBtn.addEventListener("click",async()=>{
+if(!downloadLink)return;
+const fullLink=new URL(downloadLink,window.location.href).href;
+try{
+await navigator.clipboard.writeText(fullLink);
+status.textContent="Download link copied successfully.";
+copyBtn.querySelector("span").textContent="Link Copied!";
+setTimeout(()=>copyBtn.querySelector("span").textContent="Copy Direct Download Link",1800);
+}catch{
+prompt("Copy this link:",fullLink);
+}
+});
+
+loadUpdate();
+</script>
+</body>
+</html>
