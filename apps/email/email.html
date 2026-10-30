@@ -3,31 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email</title>
+<title>Email Update | BoostingServer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#182d49 0,#0d1117 42%,#080b10 100%);color:#f0f6fc;display:flex;align-items:center;justify-content:center;padding:24px}
-.card{width:100%;max-width:440px;background:rgba(22,27,34,.96);border:1px solid #30363d;border-radius:28px;padding:42px 32px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.4)}
-.icon{width:84px;height:84px;margin:0 auto 22px;border-radius:25px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:grid;place-items:center;box-shadow:0 12px 35px rgba(37,99,235,.3)}
-.icon svg{width:42px;height:42px;fill:none;stroke:white;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-h1{font-size:29px;margin:0 0 10px;letter-spacing:-.5px}
-#versionText{margin:0;color:#8b949e;font-size:15px}
-.download-box{margin:30px 0 16px;padding:18px;border:1px solid #30363d;border-radius:20px;background:#0d1117;text-align:left}
-.file-label{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
-#fileName{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.btn{width:100%;min-height:58px;border-radius:15px;border:0;display:flex;align-items:center;justify-content:center;gap:11px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .15s ease,filter .15s ease}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:#020713;color:#f4faff;overflow-x:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
+
+/* Background grid & glows matching index.html */
+.background{position:fixed;inset:0;z-index:-5;overflow:hidden;background:radial-gradient(circle at 50% 0,#071c3d 0,#020713 45%,#01040b 100%)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,153,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,153,255,.055) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.18}
+.glow-one{width:520px;height:520px;background:#006eff;right:-180px;top:-170px}
+.glow-two{width:500px;height:500px;background:#00c8ff;left:-250px;top:35%}
+.glow-three{width:400px;height:400px;background:#003cff;right:10%;bottom:-200px}
+
+/* Card & Content matching BoostingServer design */
+.card{position:relative;width:100%;max-width:440px;background:linear-gradient(145deg,rgba(7,24,43,.94),rgba(2,8,17,.98));border:1px solid #102e48;border-radius:24px;padding:42px 32px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 40px rgba(0,153,255,.08);backdrop-filter:blur(12px)}
+.icon{width:84px;height:84px;margin:0 auto 22px;border-radius:22px;background:linear-gradient(145deg,#20d8ff,#075cff);display:grid;place-items:center;box-shadow:0 12px 35px rgba(0,140,255,.35);clip-path:polygon(50% 0,92% 22%,92% 72%,50% 100%,8% 72%,8% 22%)}
+.icon svg{width:40px;height:40px;fill:none;stroke:white;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+h1{font-family:Orbitron,sans-serif;font-size:26px;margin:0 0 10px;letter-spacing:-.5px;color:#f4faff}
+#versionText{margin:0;color:#39cfff;font-size:13px;font-weight:700;letter-spacing:1px}
+.download-box{margin:28px 0 18px;padding:18px;border:1px solid #134066;border-radius:16px;background:#031020;text-align:left}
+.file-label{font-size:10px;color:#5e7287;text-transform:uppercase;letter-spacing:1.5px;font-weight:900;margin-bottom:6px}
+#fileName{font-size:14px;font-weight:700;color:#e2f6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{width:100%;min-height:54px;border-radius:12px;border:0;display:flex;align-items:center;justify-content:center;gap:11px;font-size:14px;font-weight:900;cursor:pointer;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease;font-family:Orbitron,sans-serif;letter-spacing:.5px}
 .btn:active{transform:scale(.98)}
-.download{color:#fff;background:linear-gradient(135deg,#238636,#2ea043);box-shadow:0 10px 25px rgba(35,134,54,.18)}
-.download:hover{filter:brightness(1.1)}
-.copy{margin-top:12px;color:#c9d1d9;background:#21262d;border:1px solid #30363d}
-.copy:hover{background:#292f38}
-.btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#status{min-height:22px;margin:17px 0 0;color:#58a6ff;font-size:14px}
-.footer{margin-top:28px;padding-top:20px;border-top:1px solid #21262d;color:#6e7681;font-size:12px;letter-spacing:.5px}
+.download{color:#fff;border:1px solid #2cbfff;background:linear-gradient(135deg,#078fff,#0542ca);box-shadow:0 0 28px rgba(0,144,255,.25)}
+.download:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(0,166,255,.4);border-color:#7ceaff}
+.copy{margin-top:12px;color:#39cfff;background:#061a2c;border:1px solid #164d72}
+.copy:hover{background:#0b2b48;border-color:#39cfff;color:#fff}
+.btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#status{min-height:22px;margin:16px 0 0;color:#39cfff;font-size:12px;font-weight:600}
+.footer{margin-top:26px;padding-top:18px;border-top:1px solid #102e48;color:#4b6073;font-size:10px;letter-spacing:1.5px;font-weight:900}
 .loading{opacity:.55;pointer-events:none}
 </style>
 </head>
 <body>
+
+<div class="background">
+  <div class="grid"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+  <div class="glow glow-three"></div>
+</div>
+
 <div class="card">
 <div class="icon">
 <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg>
@@ -49,6 +70,7 @@ h1{font-size:29px;margin:0 0 10px;letter-spacing:-.5px}
 <div id="status"></div>
 <div class="footer">SECURE DIRECT DOWNLOAD</div>
 </div>
+
 <script>
 let downloadLink="";
 const appName=document.getElementById("appName");
