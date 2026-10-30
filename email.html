@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Email Update | BoostingServer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{width:100%;max-width:100%;overflow-x:hidden!important;touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{font-family:Inter,sans-serif;background:#020713;color:#f4faff;width:100%;max-width:100%;overflow-x:hidden!important;touch-action:manipulation;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
+
+/* Background grid & glows matching index.html */
+.background{position:fixed;inset:0;z-index:-5;overflow:hidden;background:radial-gradient(circle at 50% 0,#071c3d 0,#020713 45%,#01040b 100%)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,153,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,153,255,.055) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.18}
+.glow-one{width:520px;height:520px;background:#006eff;right:-180px;top:-170px}
+.glow-two{width:500px;height:500px;background:#00c8ff;left:-250px;top:35%}
+.glow-three{width:400px;height:400px;background:#003cff;right:10%;bottom:-200px}
+
+/* Card & Content matching BoostingServer design */
+.card{position:relative;width:100%;max-width:440px;background:linear-gradient(145deg,rgba(7,24,43,.94),rgba(2,8,17,.98));border:1px solid #102e48;border-radius:24px;padding:42px 32px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 40px rgba(0,153,255,.08);backdrop-filter:blur(12px)}
+.icon{width:84px;height:84px;margin:0 auto 22px;border-radius:22px;background:linear-gradient(145deg,#20d8ff,#075cff);display:grid;place-items:center;box-shadow:0 12px 35px rgba(0,140,255,.35);clip-path:polygon(50% 0,92% 22%,92% 72%,50% 100%,8% 72%,8% 22%)}
+.icon svg{width:40px;height:40px;fill:none;stroke:white;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+h1{font-family:Orbitron,sans-serif;font-size:26px;margin:0 0 10px;letter-spacing:-.5px;color:#f4faff}
+#versionText{margin:0;color:#39cfff;font-size:13px;font-weight:700;letter-spacing:1px}
+.download-box{margin:28px 0 18px;padding:18px;border:1px solid #134066;border-radius:16px;background:#031020;text-align:left}
+.file-label{font-size:10px;color:#5e7287;text-transform:uppercase;letter-spacing:1.5px;font-weight:900;margin-bottom:6px}
+#fileName{font-size:14px;font-weight:700;color:#e2f6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{width:100%;min-height:54px;border-radius:12px;border:0;display:flex;align-items:center;justify-content:center;gap:11px;font-size:14px;font-weight:900;cursor:pointer;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease;font-family:Orbitron,sans-serif;letter-spacing:.5px}
+.btn:active{transform:scale(.98)}
+.download{color:#fff;border:1px solid #2cbfff;background:linear-gradient(135deg,#078fff,#0542ca);box-shadow:0 0 28px rgba(0,144,255,.25)}
+.download:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(0,166,255,.4);border-color:#7ceaff}
+.copy{margin-top:12px;color:#39cfff;background:#061a2c;border:1px solid #164d72}
+.copy:hover{background:#0b2b48;border-color:#39cfff;color:#fff}
+.btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#status{min-height:22px;margin:16px 0 0;color:#39cfff;font-size:12px;font-weight:600}
+.footer{margin-top:26px;padding-top:18px;border-top:1px solid #102e48;color:#4b6073;font-size:10px;letter-spacing:1.5px;font-weight:900}
+.loading{opacity:.55;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div class="background">
+  <div class="grid"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+  <div class="glow glow-three"></div>
+</div>
+
+<div class="card">
+<div class="icon">
+<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/></svg>
+</div>
+<h1 id="appName">Email</h1>
+<p id="versionText">Checking latest version...</p>
+<div class="download-box">
+<div class="file-label">Latest Update</div>
+<div id="fileName">Loading APK...</div>
+</div>
+<a class="btn download loading" id="downloadBtn" href="#">
+<svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+<span>Download Latest APK</span>
+</a>
+<button class="btn copy loading" id="copyBtn" type="button">
+<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/></svg>
+<span>Copy Direct Download Link</span>
+</button>
+<div id="status"></div>
+<div class="footer">SECURE DIRECT DOWNLOAD</div>
+</div>
+
+<script>
+let downloadLink="";
+const appName=document.getElementById("appName");
+const versionText=document.getElementById("versionText");
+const fileName=document.getElementById("fileName");
+const downloadBtn=document.getElementById("downloadBtn");
+const copyBtn=document.getElementById("copyBtn");
+const status=document.getElementById("status");
+
+async function loadUpdate(){
+try{
+const response=await fetch("latest.json?"+Date.now(),{cache:"no-store"});
+if(!response.ok)throw new Error("Unable to load latest.json");
+const data=await response.json();
+if(!data.version||!data.file)throw new Error("Invalid latest.json");
+downloadLink=data.file;
+appName.textContent="Email "+data.version;
+versionText.textContent="Latest Android Build";
+fileName.textContent=data.file;
+downloadBtn.href=downloadLink;
+downloadBtn.classList.remove("loading");
+copyBtn.classList.remove("loading");
+}catch(error){
+versionText.textContent="Unable to load update";
+fileName.textContent="No APK available";
+status.textContent=error.message;
+}
+}
+
+copyBtn.addEventListener("click",async()=>{
+if(!downloadLink)return;
+const fullLink=new URL(downloadLink,window.location.href).href;
+try{
+await navigator.clipboard.writeText(fullLink);
+status.textContent="Download link copied successfully.";
+copyBtn.querySelector("span").textContent="Link Copied!";
+setTimeout(()=>copyBtn.querySelector("span").textContent="Copy Direct Download Link",1800);
+}catch{
+prompt("Copy this link:",fullLink);
+}
+});
+
+loadUpdate();
+</script>
+</body>
+</html>
