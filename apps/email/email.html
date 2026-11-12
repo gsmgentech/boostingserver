@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Email Update | BoostingServer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:#020713;color:#f4faff;overflow-x:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
+html{width:100%;max-width:100%;overflow-x:hidden!important;touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{font-family:Inter,sans-serif;background:#020713;color:#f4faff;width:100%;max-width:100%;overflow-x:hidden!important;touch-action:manipulation;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
 
 /* Background grid & glows matching index.html */
 .background{position:fixed;inset:0;z-index:-5;overflow:hidden;background:radial-gradient(circle at 50% 0,#071c3d 0,#020713 45%,#01040b 100%)}
@@ -65,7 +66,7 @@ h1{font-family:Orbitron,sans-serif;font-size:26px;margin:0 0 10px;letter-spacing
 </a>
 <button class="btn copy loading" id="copyBtn" type="button">
 <svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"/></svg>
-<span>Copy Direct Download Link</span>
+<span>Copy Download Link</span>
 </button>
 <div id="status"></div>
 <div class="footer">SECURE DIRECT DOWNLOAD</div>
